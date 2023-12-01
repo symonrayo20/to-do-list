@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/include/bootstrap-5.2.0-beta1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    </style>
+</head>
+<body>
+    <div class="container bg-aa p-3 mt-5 shadow rounded" style="border-top: 5px solid gray;">
+        <%- include("./partials/header.ejs") %>
+
+        <div class="main-container">
+            <h4 class="my-4 mx-3">Pending Tasks</h4>
+            <% if (allTasks != 0) {
+                for (let task of allTasks) {
+                    const dateCreated = task.date_created;
+                    const date = new Date(dateCreated).toLocaleString();
+            %>
+            <div class="task row bg-cc m-2 rounded p-2">
+                <div class="col-sm-1 d-flex align-items-center justify-content-center">
+                    <form class="form-check" name="theForm" id="theForm">
+                        <input class="form-check-input" type="checkbox" role="button" name="status" value="<%=task.id%>" onchange="autoSubmit()">
+                        <input class="form-check-input opacity-0" type="submit" id="status" value="<%=task.id%>" onclick="autoSubmit()">
+
+                    </form>
+                </div>
+                <div class="task-title col-sm-8">
+                    <h5 class="m-0"><%=task.task %></h5>
+                    <p class="m-0"><%=date %></p>
+                </div>
+                <div class="action col-sm-2 d-flex align-items-center">
+                    <form>
+                        <input class="btn btn-danger" type="submit" id="deletePending" value="Delete">
+                        <input type="hidden"  id="deletePendingId" value="<%=task.id %>">
+                        <input type="hidden" name="categ" value="index">
+                    </form>
+                </div>
+            </div>
+            <% } } else { %>
+                <p class="text-center my-5"> No Pending Tasks. </p>
+            <% } %>
+            
+            <h4 class="mt-5 mb-4 mx-3">Completed Tasks</h4>
+            <% if (allCompletedTasks != 0) {
+                for (let task of allCompletedTasks) {
+                    const dateCreated = task.date_created;
+                    const date = new Date(dateCreated).toLocaleString();
+            %>
+            <div class="completed row bg-cc m-2 rounded p-2">
+                <div class="col-sm-1 d-flex align-items-center justify-content-center">
+                    <input class="form-check-input bg-secondary border-0" type="checkbox" checked disabled/>
+                </div>
+                <div class="task-title col-sm-8">
+                    <h5 class="m-0"><%=task.task %></h5>
+                    <p class="m-0"><%=date %></p>
+                </div>
+                <div class="action col-sm-2 d-flex align-items-center">
+                    <form>
+                        <input class="btn btn-secondary" type="submit" id="deleteCompleted" value="Delete">
+                        <input type="hidden" id="deleteCompletedId" value="<%=task.id %>">
+                        <input type="hidden" name="categ" value="index">
+                    </form>
+                </div>
+            </div>
+            <% } } else { %>
+                <p class="text-center my-5"> No Completed Tasks. </p>
+            <% } %>
+
+        </div> 
+    </div>
+
+    <%- include("./partials/modal.ejs") %>
+
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="static/js/index.js"></script> 
+    <script src="static/js/api.js"></script> 
+</body>
+</html>
