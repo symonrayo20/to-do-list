@@ -1,0 +1,25 @@
+<% if (completedTasks != 0) {
+    for (let task of completedTasks) {
+        const dateCreated = task.date_created;
+        const date = new Date(dateCreated).toLocaleString();
+%>
+<div class="completed row bg-cc m-2 rounded p-2">
+    <div class="col-sm-1 d-flex align-items-center justify-content-center">
+        <input class="form-check-input bg-secondary border-0" type="checkbox" checked disabled/>
+    </div>
+    <div class="task-title col-sm-8">
+        <h5 class="m-0"><%=task.task %></h5>
+        <p class="m-0"><%=date %></p>
+    </div>
+    <div class="action col-sm-2 d-flex align-items-center">
+        <form>
+            <input class="btn btn-secondary" type="submit" id="deleteCompleted" value="Delete">
+            <input type="hidden" id="deleteCompletedId" value="<%=task.id %>">
+            <p><%=task.id %></p>
+            <input type="hidden" name="categ" value="index">
+        </form>
+    </div>
+</div>
+<% } } else { %>
+    <p class="text-center my-5"> No Completed Tasks. </p>
+<% } %>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("./partials/link.ejs") %>
+</head>
+<body>
+    <div class="container bg-aa p-3 mt-5 shadow rounded" style="border-top: 5px solid gray;">
+        <%- include("./partials/header.ejs") %>
+
+        <div class="main-container">
+            <h4 class="my-4 mx-3">Pending Tasks</h4>
+            <%- include("./partials/pending.ejs") %>
+            
+            <h4 class="mt-5 mb-4 mx-3">Completed Tasks</h4>
+            <%- include("./partials/completed.ejs") %>
+        </div> 
+    </div>
+
+    <%- include("./partials/modal.ejs") %>
+
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="static/js/index.js"></script> 
+    <script src="static/js/api.js"></script> 
+</body>
+</html>

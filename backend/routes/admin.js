@@ -2,19 +2,37 @@ const express = require("express");
 const router = express.Router();
 const useAdminService = require("../services/adminService");
 const { 
-    create, retrieveAllTasks, retrieveAllCompletedTasks,
-    updateStatus, deleteTasks, 
+    create, retrieveAllTasks, updateStatus, deleteTasks, 
 } = useAdminService();
 
-router.get("/", async (req, res, next) => {
+router.get("/index", async (req, res, next) => {
     try {
-        const allTasks = await retrieveAllTasks();
-        let allTasksResult = Object.keys(allTasks).length === 0 ? 0 : allTasks;
-        // console.log(allTasksResult);
-        const allCompletedTasks = await retrieveAllCompletedTasks();
-        let allCompletedTasksResult = Object.keys(allCompletedTasks).length === 0 ? 0 : allCompletedTasks;
-        // console.log(allCompletedTasksResult);
-        res.render("index", {allTasks: allTasksResult, allCompletedTasks: allCompletedTasksResult});
+        const {pendingTasks, completedTasks} = await retrieveAllTasks();
+        const AllpendingTasks = Object.keys(pendingTasks).length === 0 ? 0 : pendingTasks;
+        const AllCompletedTasks = Object.keys(completedTasks).length === 0 ? 0 : completedTasks;
+        res.render("index", {pendingTasks: AllpendingTasks, completedTasks: AllCompletedTasks});
+    } catch (err) {
+        res.status(500).json({message: "retrieve Error"});
+    }
+})
+
+router.get("/work", async (req, res, next) => {
+    try {
+        const {pendingWorkTasks, completedWorkTasks} = await retrieveAllTasks();
+        const AllpendingWorkTasks = Object.keys(pendingWorkTasks).length === 0 ? 0 : pendingWorkTasks;
+        const AllCompletedPersonalTasks = Object.keys(completedWorkTasks).length === 0 ? 0 : completedWorkTasks;
+        res.render("index", {pendingTasks: AllpendingWorkTasks, completedTasks: AllCompletedPersonalTasks});
+    } catch (err) {
+        res.status(500).json({message: "retrieve Error"});
+    }
+})
+
+router.get("/personal", async (req, res, next) => {
+    try {
+        const {pendingPersonalTasks, completedPersonalTasks} = await retrieveAllTasks();
+        const AllpendingPersonalTasks = Object.keys(pendingPersonalTasks).length === 0 ? 0 : pendingPersonalTasks;
+        const AllCompletedPersonalTasks = Object.keys(completedPersonalTasks).length === 0 ? 0 : completedPersonalTasks;
+        res.render("index", {pendingTasks: AllpendingPersonalTasks, completedTasks: AllCompletedPersonalTasks});
     } catch (err) {
         res.status(500).json({message: "retrieve Error"});
     }

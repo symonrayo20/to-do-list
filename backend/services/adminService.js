@@ -14,23 +14,23 @@ const useAdminService = () => {
 
     const retrieveAllTasks = async () => {
         try {
-            const query = "SELECT * FROM tasks WHERE status = 'pending'";
-            const result = await DBConnection(query);
-            return result;
+            const pendingTasks = await DBConnection("SELECT * FROM tasks WHERE status = 'pending'");
+            const completedTasks = await DBConnection("SELECT * FROM tasks WHERE status = 'Done'");
+            const pendingWorkTasks = await DBConnection("SELECT * FROM tasks WHERE status = 'pending' AND category = 'work'");
+            const completedWorkTasks = await DBConnection("SELECT * FROM tasks WHERE status = 'Done' AND category = 'work'");
+            const pendingPersonalTasks = await DBConnection("SELECT * FROM tasks WHERE status = 'pending' AND category = 'personal'");
+            const completedPersonalTasks = await DBConnection("SELECT * FROM tasks WHERE status = 'Done' AND category = 'personal'");
+
+            return {
+                pendingTasks: pendingTasks,
+                completedTasks: completedTasks,
+                pendingWorkTasks: pendingWorkTasks, 
+                completedWorkTasks: completedWorkTasks,
+                pendingPersonalTasks: pendingPersonalTasks, 
+                completedPersonalTasks: completedPersonalTasks,
+            };
         } catch (err) {
             console.log("Error retrieve Task", err);
-            return [];
-        }
-        
-    }
-
-    const retrieveAllCompletedTasks = async () => {
-        try {
-            const query = "SELECT * FROM tasks WHERE status = 'Done'";
-            const result = await DBConnection(query);
-            return result;
-        } catch (err) {
-            console.log("Error retrieve Completed Task", err);
             return [];
         }
         
@@ -63,7 +63,6 @@ const useAdminService = () => {
     return {
         create: createTasks,
         retrieveAllTasks: retrieveAllTasks,
-        retrieveAllCompletedTasks: retrieveAllCompletedTasks,
         updateStatus: updateStatus,
         deleteTasks: deleteTasks
     }
