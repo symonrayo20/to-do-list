@@ -29,7 +29,7 @@ const livereload = require("connect-livereload");
 
 app.use("/", adminRoute);
 
-const PORT = process.env.port || 8080;
+const PORT = process.env.port || 3001;
  
 app.listen(PORT, () => {
     console.log(`Listening to port: `, PORT);
