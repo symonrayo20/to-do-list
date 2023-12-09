@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", () => {
     const addBtn = document.querySelector("#add-task");
     const delPendingBtn = document.querySelectorAll("[name='deletePending']");
-    const delCompletedBtn = document.querySelector("#deleteCompleted");
+    const delCompletedBtn = document.querySelectorAll("[name='deleteComplete']");
     const updateStatusBtn = document.querySelectorAll("[name='status']");
 
 
@@ -18,7 +18,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 category: category
             }
         })
-
         window.location.reload();
     })
 
@@ -35,36 +34,10 @@ window.addEventListener("DOMContentLoaded", () => {
                 }
             })
 
-            // window.location.reload();
+            window.location.reload();
         })
     })
 
-    // updateStatusBtn.addEventListener("click", async () => {
-
-
-    //     await axios({
-    //         method: "put",
-    //         url: "/task",
-    //         data: {
-    //             id: updateStatusBtn.value,
-    //             status: "Done"
-    //         }
-    //     })
-    //     window.location.reload();
-
-    // })
-
-    // delPendingBtn.addEventListener("click", async () => {
-    //     const id = document.querySelector("#deletePendingId").value;
-
-    //     await axios({
-    //         method: "delete",
-    //         url: "/task",
-    //         data: {
-    //             id: id
-    //         }
-    //     })
-    // })
     delPendingBtn.forEach((btn) => {
         btn.addEventListener("click", async () => {
             const id = btn.nextElementSibling.value;
@@ -76,20 +49,23 @@ window.addEventListener("DOMContentLoaded", () => {
                     id: id
                 }
             })
-
             window.location.reload();
         })
     })
 
-    delCompletedBtn.addEventListener("click", async () => {
-        const id = document.querySelector("#deleteCompletedId").value;
+    delCompletedBtn.forEach((btn) => {
+        btn.addEventListener("click", async () => {
+            const id = btn.nextElementSibling.value;
 
-        await axios({
-            method: "delete",
-            url: "/task",
-            data: {
-                id: id
-            }
+            await axios({
+                method: "delete",
+                url: "/task",
+                data: {
+                    id: id
+                }
+            })
+            window.location.reload();
         })
     })
+
 })
