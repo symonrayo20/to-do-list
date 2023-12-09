@@ -1,7 +1,7 @@
-function autoSubmit() {
-    const formObject = document.forms["theForm"];
-    formObject.submit();
-}
+// function autoSubmit() {
+//     const formObject = document.forms["theForm"];
+//     formObject.submit();
+// }
 
 $(document).ready(function() {
     $.each($('ul').find('li'), function() {
